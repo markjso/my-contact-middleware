@@ -1,9 +1,12 @@
 const fetch = require('node-fetch');
 
-// You’ll need to fill in these credentials from your Zoho Developer Console
-const ZOHO_REFRESH_TOKEN = 'YOUR_REFRESH_TOKEN';
-const CLIENT_ID = 'YOUR_CLIENT_ID';
-const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
+exports.handler = async (event) => {
+  const {
+    ZOHO_CLIENT_ID,
+    ZOHO_CLIENT_SECRET,
+    ZOHO_REFRESH_TOKEN,
+    ZOHO_REDIRECT_URI,
+  } = process.env;
 
 async function getAccessToken() {
   const response = await fetch('https://accounts.zoho.com/oauth/v2/token', {
