@@ -1,14 +1,30 @@
 const fetch = require("node-fetch");
 
 exports.handler = async (event) => {
+  if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "No data provided" }),
+    };
+  }
+
+  let formData;
+  try {
+    formData = JSON.parse(event.body);
+  } catch (err) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "Invalid JSON format", details: err.message }),
+    };
+  }
+
+  // Destructure environment variables
   const {
     ZOHO_CLIENT_ID,
     ZOHO_CLIENT_SECRET,
     ZOHO_REFRESH_TOKEN,
     ZOHO_REDIRECT_URI,
   } = process.env;
-
-  const formData = JSON.parse(event.body);
 
   // 1. Get access token from refresh token
   const tokenRes = await fetch("https://accounts.zoho.com/oauth/v2/token", {
@@ -24,9 +40,17 @@ exports.handler = async (event) => {
   });
 
   const tokenData = await tokenRes.json();
+
+  if (!tokenData.access_token) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to get access token", tokenData }),
+    };
+  }
+
   const accessToken = tokenData.access_token;
 
-  // 2. Send data to Zoho CRM or Forms
+  // 2. Send data to Zoho CRM
   const zohoRes = await fetch("https://www.zohoapis.com/crm/v2/Contacts", {
     method: "POST",
     headers: {
@@ -42,7 +66,7 @@ exports.handler = async (event) => {
           Phone: formData.phone,
           City: formData.suburb,
           Description: formData.message,
-          Lead_Source: formData.howFoundUs,
+          Lead_Source: formData.referral,
           Number_of_Employees: formData.guestCount,
           Custom_Date: formData.preferredDate,
         },
