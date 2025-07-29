@@ -1,6 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+  <style>
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
 <form id="customContactForm">
   <label for="firstName">First Name</label>
   <input type="text" name="firstName" required />
+
   <label for="lastName">Last Name</label>
   <input type="text" name="lastName" required />
 
@@ -18,17 +58,21 @@
 
   <label for="email">Email</label>
   <input type="email" name="email" required />
+
   <label for="tel">Phone</label>
   <input type="tel" name="phone" required />
+
   <label for="suburb">Suburb</label>
   <input type="text" name="suburb" required />
+
   <label for="preferredDate">Preferred Date</label>
   <input type="text" name="preferredDate" required />
+
   <label for="guestCount">Approximate Number of Guests</label>
   <input type="number" name="guestCount" required />
 
   <label for="message">Message</label>
-  <textarea name="message"></textarea>
+  <textarea name="message" rows="5"></textarea>
 
   <label for="referral">How did you find us?</label>
   <select name="referral" required>
@@ -51,10 +95,10 @@
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("https://submit-to-zoho.netlify.app/.netlify/functions/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const response = await fetch('https://submit-to-zoho.netlify.app/.netlify/functions/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
 
       if (response.ok) {
@@ -71,3 +115,6 @@
     }
   });
 </script>
+
+</body>
+</html>
