@@ -27,7 +27,7 @@ exports.handler = async (event) => {
   const accessToken = tokenData.access_token;
 
   // 2. Send data to Zoho CRM or Forms
-  const zohoRes = await fetch("https://www.zohoapis.com/crm/v2/Leads", {
+  const zohoRes = await fetch("https://www.zohoapis.com/crm/v2/Contacts", {
     method: "POST",
     headers: {
       Authorization: `Zoho-oauthtoken ${accessToken}`,
