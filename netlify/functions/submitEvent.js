@@ -98,7 +98,6 @@ exports.handler = async (event) => {
     text: `
 Event Sheet Submission:
 Name: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
 No of guests: ${formData.guestCount}
 Event Start Time: ${formData.eventTime}
 Casino Start Time: ${formData.startTime}
