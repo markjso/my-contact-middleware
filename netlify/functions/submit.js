@@ -91,7 +91,7 @@ exports.handler = async (event) => {
   await transporter.sendMail({
     from: SMTP_USER,
     to: NOTIFY_EMAIL,
-    subject: "Request a Quote,
+    subject: "Request a Quote",
     text: `
 New Contact Submission:
 Name: ${formData.firstName} ${formData.lastName}
