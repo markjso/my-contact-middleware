@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const nodemailer = require("nodemailer");
 
 exports.handler = async (event) => {
   if (!event.body) {
@@ -77,8 +78,35 @@ exports.handler = async (event) => {
 
   const zohoResult = await zohoRes.json();
 
+  const transporter = nodemailer.createTransport({
+    host: "smtp.zoho.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: SMTP_USER,
+    to: NOTIFY_EMAIL,
+    subject: "New Form Submission",
+    text: `
+New Contact Submission:
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Suburb: ${formData.suburb}
+Preferred Date: ${formData.preferredDate}
+Guests: ${formData.guestCount}
+Referral: ${formData.referral}
+Message: ${formData.message}
+    `,
+  });
+
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "Data submitted!", zohoResult }),
+    body: JSON.stringify({ message: "Data submitted to Zoho!", zohoResult }),
   };
 };
