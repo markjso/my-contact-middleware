@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+  <style>
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #F44336;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #a3281f;
+    }
+  </style>
+</head>
+<body>
+
+<form id="customContactForm">
+  <label for="firstName">First Name</label>
+  <input type="text" name="firstName" required />
+
+  <label for="lastName">Last Name</label>
+  <input type="text" name="lastName" required />
+
+  <label for="guestCount">Approximate Number of Guests</label>
+  <input type="text" name="guestCount" required />
+
+  <label for="eventTime">Function Start Time</label>
+  <input type="text" name="eventTime" required />
+
+  <label for="startTime">Time you would like us to start (All events run for three hours)</label>
+  <input type="text" name="startTime" required />
+
+  <label for="venue">Venue Address</label>
+  <input type="text" name="venue" required />
+
+  <label for="venueContact">Venue Contact Name</label>
+  <input type="text" name="venueContact" required />
+
+   <label for="venuePhone">Venue Phone No</label>
+  <input type="phone" name="venuePhone" required />
+
+  <label for="setup">Set up time available from</label>
+  <input type="text" name="setup" required />
+ 
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  document.getElementById('customContactForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('https://submit-to-zoho.netlify.app/.netlify/functions/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      console.log(result); 
+      if (response.ok) {
+        alert('Thank you! Your message has been sent.');
+        e.target.reset();
+      } else {
+        alert('There was an error submitting the form. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error. Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
