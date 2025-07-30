@@ -4,7 +4,7 @@ exports.handler = async (event) => {
   if (!event.body) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "No data provided" }),
+      body: JSON.stringify({ error: "No data provided in body" }),
     };
   }
 
@@ -14,7 +14,7 @@ exports.handler = async (event) => {
   } catch (err) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "Invalid JSON format", details: err.message }),
+      body: JSON.stringify({ error: "Invalid JSON body" }),
     };
   }
 
