@@ -67,7 +67,7 @@ exports.handler = async (event) => {
           First_Name: formData.firstName,
           Last_Name: formData.lastName,
           Number_of_guests: formData.guestCount,
-          Event_Start_Time: formData.evenTime,
+          Event_Start_Time: formData.eventTime,
           Start_Time: formData.startTime,
           Venue: formData.venue,
           Venue_Contact: formData.venueContact,
@@ -94,17 +94,19 @@ exports.handler = async (event) => {
   await transporter.sendMail({
     from: SMTP_USER,
     to: NOTIFY_EMAIL,
-    subject: "Request a Quote",
+    subject: "Event Sheet",
     text: `
-New Contact Submission:
+Event Sheet Submission:
 Name: ${formData.firstName} ${formData.lastName}
 Email: ${formData.email}
-Phone: ${formData.phone}
-Suburb: ${formData.suburb}
-Preferred Date: ${formData.preferredDate}
-Guests: ${formData.guestCount}
-Referral: ${formData.referral}
-Message: ${formData.message}
+No of guests: ${formData.guestCount}
+Event Start Time: ${formData.eventTime}
+Casino Start Time: ${formData.startTime}
+Venue Address: ${formData.venue}
+Venue Contact: ${formData.venueContact}
+Venue Phone No: ${formData.venuePhone}
+Set up available from: ${formData.setup}
+Trophy Inscripton: ${formData.trophy}
     `,
   });
 
