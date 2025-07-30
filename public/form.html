@@ -101,12 +101,12 @@
         body: JSON.stringify(data)
       });
 
+      const result = await response.json();
+      console.log(result); 
       if (response.ok) {
         alert('Thank you! Your message has been sent.');
         e.target.reset();
       } else {
-        const errorData = await response.json();
-        console.error(errorData);
         alert('There was an error submitting the form. Please try again.');
       }
     } catch (err) {
