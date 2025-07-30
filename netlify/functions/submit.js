@@ -25,6 +25,9 @@ exports.handler = async (event) => {
     ZOHO_CLIENT_SECRET,
     ZOHO_REFRESH_TOKEN,
     ZOHO_REDIRECT_URI,
+    SMTP_USER,
+    SMTP_PASS,
+    NOTIFY_EMAIL,
   } = process.env;
 
   // 1. Get access token from refresh token
