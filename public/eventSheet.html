@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact Form</title>
+  <title>Event Sheet</title>
   <style>
     form {
       max-width: 600px;
@@ -37,7 +37,7 @@
 </head>
 <body>
 
-<form id="customContactForm">
+<form id="customEventSheet">
   <label for="firstName">First Name</label>
   <input type="text" name="firstName" required />
 
@@ -64,6 +64,9 @@
 
   <label for="setup">Set up time available from</label>
   <input type="text" name="setup" required />
+
+  <label for="trophy">Winners Trophy Inscription</label>
+  <textarea name="trophy" placeholder="(eg Your Company Casino Night Champion or Bills 50th Birthday Casino Winner or Your Club Race Night Champion" rows="5"></textarea>
  
   <button type="submit">Submit</button>
 </form>
@@ -76,7 +79,7 @@
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('https://submit-to-zoho.netlify.app/.netlify/functions/submit', {
+      const response = await fetch('https://submit-to-zoho.netlify.app/.netlify/functions/submitEvent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -85,7 +88,7 @@
       const result = await response.json();
       console.log(result); 
       if (response.ok) {
-        alert('Thank you! Your message has been sent.');
+        alert('Thank you! Your event sheet has been sent.');
         e.target.reset();
       } else {
         alert('There was an error submitting the form. Please try again.');
