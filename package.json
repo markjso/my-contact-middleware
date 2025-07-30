@@ -4,5 +4,6 @@
   "main": "submit.js",
   "dependencies": {
     "node-fetch": "^2.6.9"
+    "nodemailer": "^6.9.9"
   }
 }
