@@ -73,7 +73,7 @@ exports.handler = async (event) => {
           Description: formData.message,
           Lead_Source: formData.referral,
           Number_of_guests: formData.guestCount,
-          Date_of_Event: formData.preferredDate,
+          Dealers_Required: formData.preferredDate,
         },
       ],
     }),
